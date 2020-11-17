@@ -14,6 +14,7 @@ const concat = require('gulp-concat');
 const terser = require('gulp-terser');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
+const plumber = require('gulp-plumber');
 // const browserSync = require('browser-sync');
 
 const postcssPlugins = [ 
@@ -45,10 +46,19 @@ function buildStyles() {
 function buildScript() {
   return(src(jsPath))
   .pipe(sourcemaps.init())
+  .pipe(plumber())
+  .pipe(babel({
+    presets: [
+      ['@babel/env', {
+        modules: false
+      }]
+    ]
+  }))
   .pipe(concat('script.js'))
   .pipe(terser())
   .pipe(sourcemaps.write('.'))
   .pipe(dest('public/js'))
+  
   // .pipe(browserSync.stream());
 }
 
