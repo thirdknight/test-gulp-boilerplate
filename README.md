@@ -31,3 +31,16 @@ Plugins:
 npm install --save-dev gulp gulp-sass gulp-sourcemaps gulp-postcss autoprefixer cssnano gulp-concat gulp-terser gulp-imagemin
 
 Resources: https://gulpjs.com/docs/en/getting-started/quick-start https://postcss.org/
+
+
+
+1.npm init
+  npm init
+2.Install Gulp Globally
+  npm install gulp-cli -g
+3.Install Gulp as dev dependency(The node_modules will be created)
+  npm install gulp -D
+4.Create gulpfile.js
+5.Gups dependencies
+  npm install --save-dev gulp-imagemin
+  npm install node-sass gulp-sass --save-dev
