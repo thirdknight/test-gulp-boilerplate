@@ -1,6 +1,6 @@
 const srcDir = 'src/';
-const cssPath = 'src/assets/scss/styles.scss';
-const jsPath = 'src/assets/js/**/*.js';
+const cssPath = 'src/scss/styles.scss';
+const jsPath = 'src/js/**/*.js';
 
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
@@ -20,28 +20,21 @@ const postcssPlugins = [
 
 function copyHtml() {
   return src(srcDir + '*.html')
-  .pipe(gulp.dest('dist'));
+  .pipe(gulp.dest('public'));
 }
 
 function imgTask() {
-  return src(srcDir + 'images/*')
+  return src(srcDir + 'assets/images/*')
   .pipe(imagemin())
-  .pipe(gulp.dest('dist/images'));
+  .pipe(gulp.dest('public/images'));
 }
-
-// function buildStyles() {
-//   return src(srcDir + 'assets/scss/styles.scss')
-//   .pipe(sass().on('error',sass.logError))
-//   .pipe(gulp.dest('dist/css'));
-// }
-
 function buildStyles() {
   return src(cssPath)
   .pipe(sourcemaps.init())
   .pipe(sass())
   .pipe(postcss(postcssPlugins))
   .pipe(sourcemaps.write('.'))
-  .pipe(dest('dist/assets/css'));
+  .pipe(dest('public/css'));
 }
 
 function buildScript() {
@@ -50,7 +43,7 @@ function buildScript() {
   .pipe(concat('script.js'))
   .pipe(terser())
   .pipe(sourcemaps.write('.'))
-  .pipe(dest('dist/assets/js'));
+  .pipe(dest('public/js'));
 }
 
 function watchTask() {
@@ -63,5 +56,5 @@ exports.copyHtml = copyHtml; // $gulp copyHtml
 
 exports.default = series(
   parallel(copyHtml, imgTask, buildScript, buildStyles),
-  watchTask
+  watchTask // $gulp
 );
