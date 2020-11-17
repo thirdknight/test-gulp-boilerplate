@@ -44,3 +44,4 @@ Resources: https://gulpjs.com/docs/en/getting-started/quick-start https://postcs
 5.Gups dependencies
   npm install --save-dev gulp-imagemin
   npm install node-sass gulp-sass --save-dev
+  npm install --save-dev gulp-sourcemaps gulp-concat gulp-terser
