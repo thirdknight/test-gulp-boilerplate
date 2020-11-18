@@ -7,7 +7,6 @@ const jsPath = 'src/js/**/*.js';
 
 const { src, series, parallel, dest, watch } = require('gulp');
 // dependecies
-
 const gulp = require('gulp');
 const browsersync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');
@@ -42,7 +41,7 @@ function buildStyles() {
   .pipe(sourcemaps.init())
   .pipe(sass())
   .pipe(postcss(postcssPlugins))
-  .pipe(sourcemaps.write('.'))
+  .pipe(sourcemaps.write('../../src/sourcemaps'))
   .pipe(dest('public/css'))
   .pipe(browsersync.reload({ stream: true }));
 }
@@ -60,35 +59,21 @@ function buildScript() {
   }))
   .pipe(concat('script.js'))
   .pipe(terser())
-  .pipe(sourcemaps.write('.'))
+  .pipe(sourcemaps.write('../sourcemaps'))
   .pipe(dest('public/js'))
   .pipe(browsersync.reload({ stream: true }));
-  // .pipe(browserSync.stream());
 }
+
 function browserSync(done) {
   browsersync.init({
-    // server: {
-    //   baseDir: './'
-    // }
     proxy: localUrl,
   });
   done();
 }
-// function watche() {
-//   browserSync.init({
-//     server: {
-//       baseDir: './'
-//     }
-//   });
-// gulp.watch('src/scss/styles.scss', buildStyles);
-// gulp.watch('src/*html').on('change', browserSync.reload);
-// gulp.watch('.src/js/**/*.js').on('change', browserSync.reload);
-// }
 
 function watchTask() {
   watch([cssPath, jsPath], { interval: 1000 }, parallel(buildStyles, buildScript));
 }
-
 
 // Exports commands
 exports.buildScript = buildScript; //$gup buildScript
@@ -96,7 +81,6 @@ exports.sass = buildStyles;  // $gulp sass
 exports.imgTask = imgTask;   //$gulp imgTask
 exports.copyHtml = copyHtml; // $gulp copyHtml
 exports.browserSync = browserSync;
-// exports.watche = watche;
 exports.default = series(
   parallel(copyHtml, imgTask, buildScript, buildStyles, browserSync),
   watchTask // $gulp
