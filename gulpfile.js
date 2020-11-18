@@ -1,10 +1,15 @@
+// config
+const localUrl = 'localhost/test-gulp-boilerplate/public';
+
 const srcDir = 'src/';
 const cssPath = 'src/scss/styles.scss';
 const jsPath = 'src/js/**/*.js';
 
 const { src, series, parallel, dest, watch } = require('gulp');
 // dependecies
+
 const gulp = require('gulp');
+const browsersync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
@@ -15,7 +20,6 @@ const terser = require('gulp-terser');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 const plumber = require('gulp-plumber');
-// const browserSync = require('browser-sync');
 
 const postcssPlugins = [ 
   autoprefixer(),
@@ -40,7 +44,7 @@ function buildStyles() {
   .pipe(postcss(postcssPlugins))
   .pipe(sourcemaps.write('.'))
   .pipe(dest('public/css'))
-  // .pipe(browserSync.stream);
+  .pipe(browsersync.reload({ stream: true }));
 }
 //Build Scripts
 function buildScript() {
@@ -58,10 +62,18 @@ function buildScript() {
   .pipe(terser())
   .pipe(sourcemaps.write('.'))
   .pipe(dest('public/js'))
-  
+  .pipe(browsersync.reload({ stream: true }));
   // .pipe(browserSync.stream());
 }
-
+function browserSync(done) {
+  browsersync.init({
+    // server: {
+    //   baseDir: './'
+    // }
+    proxy: localUrl,
+  });
+  done();
+}
 // function watche() {
 //   browserSync.init({
 //     server: {
@@ -83,8 +95,9 @@ exports.buildScript = buildScript; //$gup buildScript
 exports.sass = buildStyles;  // $gulp sass
 exports.imgTask = imgTask;   //$gulp imgTask
 exports.copyHtml = copyHtml; // $gulp copyHtml
+exports.browserSync = browserSync;
 // exports.watche = watche;
 exports.default = series(
-  parallel(copyHtml, imgTask, buildScript, buildStyles),
+  parallel(copyHtml, imgTask, buildScript, buildStyles, browserSync),
   watchTask // $gulp
 );
