@@ -1,6 +1,6 @@
 import Person from './components/test';
 
-const john = new Person('John', 35);
+const john = new Person('Edinson is Software Enginure from Microsof', 36);
 console.log(john.getInfo());
 
 // const abc = {a: "a", b: "b", c: "c"};

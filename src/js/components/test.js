@@ -5,7 +5,7 @@ class Person {
   }
 
   getInfo(){
-    return `${this.name} is ${this.age} years old.`;
+    return `${this.name} and he is ${this.age} years old`;
   }
 }
 
