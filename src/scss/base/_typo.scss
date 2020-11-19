@@ -5,7 +5,7 @@ body {
   font-family: $ft-body;
 }
 
-$fontastic-font-directory-path: '../fonts/fontastic/' !default;
+$fontastic-font-directory-path: '../assets/fonts/fontastic/' !default;
 $fontastic-font-file-name: 'fontastic' !default;
 $fontastic-font-file-path: $fontastic-font-directory-path + $fontastic-font-file-name !default;
 @font-face {
