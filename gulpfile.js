@@ -152,4 +152,4 @@ exports.sass = buildStyles; // $ gulp sass
 exports.buildScripts = buildScripts; //gulp script
 exports.watch = parallel(watchCSS, watchJS, browserSync); // $gulp watch
 
-exports.default = parallel(copyHtml, copyImages, copyFonts,watchCSS, watchJS, browserSync); // $gulp
+exports.default = parallel(copyHtml, copyImages, copyFonts, watchCSS, watchJS, browserSync); // $gulp
